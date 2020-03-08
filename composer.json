@@ -1,0 +1,21 @@
+{
+    "name": "tigrez/tempie",
+    "description": "Template Engine",
+    "authors": [
+        {
+            "name": "LucGeritz",
+            "email": "luc@tigrez.nl"
+        }
+    ],
+    "require": {}
+    ,  
+    "require-dev": {
+        "tigrez/iexpect": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tigrez\\Tempie\\": "src"
+        }
+    }
+
+}

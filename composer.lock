@@ -1,0 +1,60 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "d596d218c02c3924537a0c2b040772f2",
+    "content-hash": "018dafb5ae12737811996f23b2043851",
+    "packages": [],
+    "packages-dev": [
+        {
+            "name": "tigrez/iexpect",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LucGeritz/IExpect.git",
+                "reference": "cc7ea35a7cf4021e875296ca7e07ad3e6dabfa03"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LucGeritz/IExpect/zipball/cc7ea35a7cf4021e875296ca7e07ad3e6dabfa03",
+                "reference": "cc7ea35a7cf4021e875296ca7e07ad3e6dabfa03",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tigrez\\IExpect\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Luc Geritz",
+                    "email": "tigrezoft@gmail.com"
+                }
+            ],
+            "description": "A very small unit test library",
+            "homepage": "https://github.com/LucGeritz/IExpect",
+            "keywords": [
+                "test",
+                "unit test"
+            ],
+            "time": "2016-12-04 08:51:55"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
