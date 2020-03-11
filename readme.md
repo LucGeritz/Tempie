@@ -8,8 +8,8 @@ Tempie is what I think I template engine should offer
 
 - an easy to read syntax
 - variable resolving 
-- iterations 
-- selections 
+- iterations
+- selections
 - comments 
 
 ## A most basic example
@@ -41,7 +41,7 @@ $tempie->load(['destination' => ['city'=>'Paris', 'platform' => '11b']]);
 echo($tempie->render());
 ````
 
-## If
+## Selections (If)
 
 An *if* looks like this..
 
@@ -64,6 +64,19 @@ You can negate the condition by prefixing it with a !
     {{!passed}} -> <div>You failed, better luck next time!</div>
 [/if]
 ````
-## Foreach
+
+In the condition the brackets are optional. 
+
+````html
+[if]
+    !passed -> <div>You failed, better luck next time!</div>
+[/if]
+````
+
+## Iterations (Foreach)
+
+A *foreach* looks like this..
+
+
 
 ## Comments

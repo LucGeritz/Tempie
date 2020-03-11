@@ -112,13 +112,13 @@ class Tempie
 			$rows = $this->getValueFromArray($rowsVariable, $this->data);
 
 			if (!is_array($rows)) {
-				$this->logError(sprintf("'%s' is not an array"));
+				$this->logError(sprintf("'%s' is not an array", $rowsVariable));
 				return '';
 			}
 
 			$resolvedTemplate = '';
 
-			foreach ($rows as $key->$value) {
+			foreach ($rows as $key=>$value) {
 				$resolvedLine = $template;
 				$resolvedLine = str_replace($rowVariable, $rowsVariable . '.' . $key, $resolvedLine);
 				$resolvedTemplate .= $resolvedLine;
