@@ -65,7 +65,7 @@ You can negate the condition by prefixing it with a !
 [/if]
 ````
 
-In the condition the brackets are optional. 
+In the condition, the part before `->`, the brackets are optional. The next example would result in the same output.
 
 ````html
 [if]
@@ -77,6 +77,49 @@ In the condition the brackets are optional.
 
 A *foreach* looks like this..
 
+````
+[foreach] 
+{{users}} as {{user}} ->
+    Name: {{user.name}}
+    Age : {{user.age}}
+[/foreach]
+````
+
+In the example `{{users}}` is the name of the array. This array is iterated by Tempie and each iteration can be refered to by `{{user}}`.
+
+If the data would be
+
+    [
+        'users' => [
+            ['name' => 'Herbert', 'age' => 45],
+            ['name' => 'Katja', 'age' => 52],
+            ['name' => 'Sue Ann', 'age' => 27]
+        ]
+
+    ];
+
+the result would be
+
+    Name: Herbert
+    Age : 45
+
+    Name: Katja
+    Age : 52
+
+    Name: Sue Ann
+    Age : 27
+
+Again, brackets for the array name and variable name before the `->` are optional.
 
 
 ## Comments
+
+Comments look like this..
+
+````
+[*] This is
+a multiline comment [/*]
+````
+Comments will be removed from the resolved template.
+
+## Error log

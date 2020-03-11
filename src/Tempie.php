@@ -18,8 +18,29 @@ class Tempie
 	private function logError($errorText)
 	{
 		if ($this->logCallback) {
-			call_user_func($this->logCallback, "** tmpl err ({$this->file}): $errorText");
+			call_user_func($this->logCallback, "** tempie err ({$this->file}): $errorText");
 		}
+	}
+
+	private function filter($value, array $filters){
+		foreach($filters as $filter){
+			$filterParts = explode('(', $filter);
+			$params = '';
+			if(count($filterParts)>1){
+				$params = rtrim($filterParts[1], ')');
+			}
+
+			$filterClass = $filterParts[0].'Filter';
+			if(class_exists($filterClass)){
+				$filterObject = new $filterClass();
+				$value = $filterObject->filter($value, explode(',', $params));
+			}
+			else{
+				$this->logError(sprintf('%s filter assumes existence of class %s which cannot be found', $filterParts[0], $filterClass));
+			}
+		}
+
+		return $value;
 	}
 
 	private function getValueFromArray($keys, $data)
@@ -200,11 +221,22 @@ class Tempie
 				$pos2 = $pos2 + strlen($this->varTags[1]) - 1;
 			}
 			$placeHolder = substr($text, $pos1, ($pos2 - $pos1) + 1);
-			$varNames = explode('.', substr($placeHolder, strlen($this->varTags[0]), -strlen($this->varTags[1])));
+			$varNamesStr = substr($placeHolder, strlen($this->varTags[0]), -strlen($this->varTags[1]));
+			
+			$filters = explode('|', $varNamesStr);
+			if(count($filters)>1){
+				$varNamesStr = $filters[0];
+				array_shift($filters);
+			} 
+			
+			$varNames = explode('.', $varNamesStr);
 
 			$value = $this->getValueFromArray($varNames, $this->data);
 
 			if ($value) {
+				if($filters){
+					$value = $this->filter($value, $filters);
+				}
 				$text = str_replace($placeHolder, $value, $text);
 			} else {
 				$text = str_replace($placeHolder, '', $text);
