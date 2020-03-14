@@ -11,6 +11,7 @@ class Tempie
 	private $file;
 
 	private $filterCache = [];
+	private $permFilters = [];
 
 	/**
 	 * Log an error
@@ -263,10 +264,11 @@ class Tempie
 			$varNamesStr = substr($placeHolder, strlen($this->config['varTags'][0]), -strlen($this->config['varTags'][1]));
 
 			$filters = explode('|', $varNamesStr);
-			if (count($filters) > 1) {
-				$varNamesStr = $filters[0];
-				array_shift($filters);
-			}
+			$varNamesStr = $filters[0];
+			array_shift($filters);
+
+			// add permanent filters
+			$filters = array_merge($this->permFilters, $filters);
 
 			$varNames = explode('.', $varNamesStr);
 
@@ -301,9 +303,23 @@ class Tempie
 		return $this;
 	}
 
+	/**
+	 * Set filtercache
+	 * USeful if you want the cache to be reused over several template instances
+	 */
 	public function setFilterCache(FilterCache $filterCache)
 	{
 		$this->filterCache = $filterCache;
+	}
+
+	/**
+	 * Set permanent filters
+	 * 'permanent filters' are filters used for every value without having to specify it
+	 * @param array filternames
+	 *
+	 */
+	public function setPermanentFilters(array $filters){
+		$this->permFilters = $filters;
 	}
 
 	/**

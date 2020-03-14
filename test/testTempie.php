@@ -4,6 +4,42 @@
 
 class testTempie implements Tigrez\IExpect\ITest{
 
+	protected function testPermanentFilter(Tigrez\IExpect\Assertion $I){
+
+		/* I expect that....................
+			If I inject a permanent filter into my template
+		*/
+		$tempie = new Tigrez\Tempie\Tempie("{{city1}} or {{city2}} or {{city3}}");
+		$tempie->setPermanentFilters(['ucfirst']);
+		$tempie->load(
+			[
+				'city1' => 'new YOrk',
+				'city2' => 'DETROIT',
+				'city3' => 'mobIle',
+			]
+		);
+		$result = $tempie->render();
+
+		/* .. the filter will be used on all values even if it is not specified */
+		$I->expect($result)->equals('New york or Detroit or Mobile');
+
+		/* I expect that....................
+			If I inject a permanent filter into my template _and_ use a filter on the variable
+		*/
+		$tempie = new Tigrez\Tempie\Tempie("{{city|question}}");
+		$tempie->setPermanentFilters(['exclamation']);
+		$tempie->load(
+			[
+				'city' => 'Detroit',
+			]
+		);
+		$result = $tempie->render();
+
+		/* .. the permanent filter will be used _before_ the specific filter (so !? and not ?!) */
+		$I->expect($result)->equals('Detroit!?');
+
+	}
+
 	protected function testFilter(Tigrez\IExpect\Assertion $I){
 
 		/* I expect that....................
@@ -220,6 +256,7 @@ class testTempie implements Tigrez\IExpect\ITest{
 		$this->testForeach($I);
 		$this->testComment($I);
 		$this->testFilter($I);
+		$this->testPermanentFilter($I);
 
 	}
 }
@@ -234,6 +271,12 @@ class ucfirstFilter implements Tigrez\Tempie\Filter
 {
 	public function filter($value, array $params){
 		return ucfirst(strtolower($value));
+	}
+}
+class exclamationFilter implements \Tigrez\Tempie\Filter
+{
+	public function filter($value, array $params){
+		return $value.'!';
 	}
 }
 

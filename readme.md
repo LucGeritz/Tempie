@@ -4,9 +4,8 @@
 
 I love template engines for PHP.
 At the same time I believe template engines should be small and humble.
-Tempie is what I think I template engine should offer
+Tempie represents the minimal (and maybe maximal) functionality a template engine should offer
 
-- an easy to read syntax
 - variable resolving
 - iterations
 - selections
@@ -29,7 +28,7 @@ this will echo:
 So what happened?
 First an instance of tempie was created. The constructor parameter can either be a string (like in the example) or, more useful in the real world, the file name of a template file.
 
-Then `$tempie->load($data)` is used to load the data in the template. This data is expected to be an associative array. In the template you can reference to the key of the array, Templie will replace it by its value.
+Then `$tempie->load($data)` is used to load the data in the template. This data is expected to be an associative array. In the template you can reference to the key of the array, Tempie will replace it by its value.
 
 ## Nested arrays
 Nested arrays work as well. Use a period to refer to a subelement. The earlier example could be rewritten as such..
@@ -48,7 +47,7 @@ An *if* looks like this..
 
 ````html
 [if]
-    {{passed}} -> <div>Congratulations! You passed!</div>
+    passed -> <div>Congratulations! You passed!</div>
 [/if]
 ````
 
@@ -56,21 +55,22 @@ in general it's
 
     [if] condition -> text [/if]
 
-*condition* is a variable, if the condition is true (or more precise 'truthy') *text* is shown. If false (falsy) it is ignored.
+*condition* is a variable, if the condition is true (or more precise 'truthy') *text* is rendered. If false (falsy) it is ignored.
 
 You can negate the condition by prefixing it with a !
 
 ````html
 [if]
-    {{!passed}} -> <div>You failed, better luck next time!</div>
+    !passed -> <div>You failed, better luck next time!</div>
 [/if]
 ````
 
-In the condition, the part before `->`, the brackets are optional. The next example would result in the same output.
+Because of its context tempie knows the condition is a reference to a variable making the use of brackets unnecessary.
+If (e.g. for reasons of consistency) you want to use them you can.
 
 ````html
 [if]
-    !passed -> <div>You failed, better luck next time!</div>
+    {{!passed}} -> <div>You failed, better luck next time!</div>
 [/if]
 ````
 
@@ -80,13 +80,13 @@ A *foreach* looks like this..
 
 ````
 [foreach]
-{{users}} as {{user}} ->
+users as user ->
     Name: {{user.name}}
     Age : {{user.age}}
 [/foreach]
 ````
 
-In the example `{{users}}` is the name of the array. This array is iterated by Tempie and each iteration can be refered to by `{{user}}`.
+In the example `users` is the variable name of the array. This array is iterated by Tempie and each iteration can be refered to by `user`.
 
 If the data would be
 
@@ -124,6 +124,10 @@ a multiline comment [/*]
 Comments will be removed from the resolved template.
 
 ## Filters
+
+## Permanent Filters
+
+## Config
 
 ## Error log
 
