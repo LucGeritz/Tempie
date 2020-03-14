@@ -2,15 +2,16 @@
 
 >Tempie is work in progress. It does work already though..
 
-I love template engines for PHP. 
+I love template engines for PHP.
 At the same time I believe template engines should be small and humble.
 Tempie is what I think I template engine should offer
 
 - an easy to read syntax
-- variable resolving 
+- variable resolving
 - iterations
 - selections
-- comments 
+- comments
+- filters
 
 ## A most basic example
 
@@ -25,10 +26,10 @@ this will echo:
 
     The train to Paris leaves from platform 11b
 
-So what happened?  
-First an instance of tempie was created. The constructor parameter can either be a string (like in the example) or, more useful in the real world, the file name of a template file. 
+So what happened?
+First an instance of tempie was created. The constructor parameter can either be a string (like in the example) or, more useful in the real world, the file name of a template file.
 
-Then `$tempie->load($data)` is used to load the data in the template. This data is expected to be an associative array. In the template you can reference to the key of the array, Templie will replace it by its value. 
+Then `$tempie->load($data)` is used to load the data in the template. This data is expected to be an associative array. In the template you can reference to the key of the array, Templie will replace it by its value.
 
 ## Nested arrays
 Nested arrays work as well. Use a period to refer to a subelement. The earlier example could be rewritten as such..
@@ -51,7 +52,7 @@ An *if* looks like this..
 [/if]
 ````
 
-in general it's 
+in general it's
 
     [if] condition -> text [/if]
 
@@ -78,7 +79,7 @@ In the condition, the part before `->`, the brackets are optional. The next exam
 A *foreach* looks like this..
 
 ````
-[foreach] 
+[foreach]
 {{users}} as {{user}} ->
     Name: {{user.name}}
     Age : {{user.age}}
@@ -122,4 +123,9 @@ a multiline comment [/*]
 ````
 Comments will be removed from the resolved template.
 
+## Filters
+
 ## Error log
+
+## The Tempie Factory
+
